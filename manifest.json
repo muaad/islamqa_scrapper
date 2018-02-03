@@ -1,0 +1,36 @@
+{
+  "manifest_version": 2,
+
+  "name": "IslamQA Scrapper",
+  "description": "Collect links to questions and answers on IslamQA",
+  "version": "1.0",
+  "options_ui": {
+    "page": "questions.html",
+    "chrome_style": true
+  },
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "questions.html"
+  },
+  "permissions": [
+    "activeTab",
+    "https://ajax.googleapis.com/",
+    "https://islamqa-8d514.firebaseio.com/",
+    "webNavigation",
+    "storage"
+  ],
+  "background": {
+    "persistent": false,
+    "scripts": ["jquery-3.3.1.min.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://islamqa.info/*"
+      ],
+      "js": ["jquery-3.3.1.min.js", "index.js"]
+    }
+  ],
+  "web_accessible_resources": ["index.js"]
+}
