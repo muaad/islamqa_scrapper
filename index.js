@@ -1,28 +1,42 @@
 function saveLink(userID, url, text, btn) {
+	var id = url.split('/')[2]
 	url = 'https://islamqa.info' + url
-	$.get(url, function(data) {
+	$.ajax({
+		type: "POST",
+		url: 'https://islamqa-8d514.firebaseio.com/' + userID + '.json',
+		dataType: 'json',
+		data: JSON.stringify({ url: url, text: text, used: false }),
+		success: function (data, textStatus, jqXhr) {
+			btn.html('<i class="fa fa-check"></i> Added');
+			btn.prop('disabled', true)
+			saveQuestions(id, url);
+		},
+		error: function (request, status, error) {
+			console.log(request.responseText);
+		}
+	});
+}
+
+function saveQuestions(id, url) {
+	$.get(url, function (data) {
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(data, "text/html");
 		var question = doc.body.querySelectorAll('.ftwa-single-q')[0].firstChild.nodeValue
 		var ans = Array.prototype.slice.call(doc.body.querySelectorAll('.ftwa-single-answer'))
 		var answer = $(ans[0]).text();
 
-		btn.html('<i class="fa fa-check"></i> Added');
-		btn.prop('disabled', true)
-
 		$.ajax({
 			type: "POST",
-			url: 'https://islamqa-8d514.firebaseio.com/' + userID + '.json',
+			url: 'https://islamqa-api.firebaseio.com/questions/.json',
 			dataType: 'json',
-			data: JSON.stringify({ url: url, text: text, used: false, question: question, answer: answer }),
+			data: JSON.stringify({ id: id, url: url, question: question, answer: answer }),
 			success: function (data, textStatus, jqXhr) {
-				
 			},
 			error: function (request, status, error) {
 				console.log(request.responseText);
 			}
 		});
-	})
+	});
 }
 
 function setUserID() {
@@ -65,7 +79,6 @@ function copyAndRemoveQuestions(ids, user) {
 			data: {ids: ids},
 			dataType: 'json',
 			success: function (data, textStatus, jqXhr) {
-				console.log(data);
 			},
 			error: function (request, status, error) {
 				console.log(request.responseText);
