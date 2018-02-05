@@ -1,5 +1,6 @@
 function saveLink(userID, url, text, btn) {
-	$.get('https://islamqa.info' + url, function(data) {
+	url = 'https://islamqa.info' + url
+	$.get(url, function(data) {
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(data, "text/html");
 		var question = doc.body.querySelectorAll('.ftwa-single-q')[0].firstChild.nodeValue
@@ -98,11 +99,7 @@ $(document).on('click', '#removeModal', function(e) {
 	// $('#questionsModal').modal('toggle');
 	$('#modalHolder').remove()
 	$('.modal-backdrop').remove()
-	$(body).removeClass('modal-open')
-})
-
-$('#questionsModal').on('hidden.bs.modal', function () {
-	// do something…
+	$('body').removeClass('modal-open')
 })
 
 $(document).on('click', '#see-questions', function(e) {
@@ -132,7 +129,7 @@ $(document).on('click', '#see-questions', function(e) {
 				if (urls.indexOf(link.url) === -1) {
 					if (!link.used) {
 						urls.push(link.url)
-						questions += '💠' + link.text + '\nhttps://islamqa.success' + link.url + '\n\n';
+						questions += '💠' + link.text + '\n' + link.url + '\n\n';
 						// questions += '<div class="well well-sm"><p>💠' + link.text + '<br><a href="https://islamqa.success' + link.url + '">https://islamqa.success' + link.url + '</a><br><br><br></p></div>'
 					}
 				}

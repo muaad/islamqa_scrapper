@@ -13,10 +13,15 @@
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
+
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+
   "permissions": [
     "activeTab",
     "https://ajax.googleapis.com/",
-    "https://96a3c590.ngrok.io/",
     "https://kasoko.co.ke/",
     "webNavigation",
     "storage"
