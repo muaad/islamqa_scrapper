@@ -23,14 +23,14 @@
   ],
   "background": {
     "persistent": false,
-    "scripts": ["jquery-3.3.1.min.js", "bootstrap.min.js"]
+    "scripts": ["jquery-3.3.1.min.js", "bootstrap.min.js", "clipboard.min.js"]
   },
   "content_scripts": [
     {
       "matches": [
         "https://islamqa.info/*"
       ],
-      "js": ["jquery-3.3.1.min.js", "bootstrap.min.js", "index.js"]
+      "js": ["jquery-3.3.1.min.js", "bootstrap.min.js", "index.js", "clipboard.min.js"]
     }
   ],
   "web_accessible_resources": ["index.js"]
