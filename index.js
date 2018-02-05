@@ -1,17 +1,27 @@
 function saveLink(userID, url, text, btn) {
-	$.ajax({
-		type: "POST",
-		url: 'https://islamqa-8d514.firebaseio.com/' + userID + '.json',
-		dataType: 'json',
-		data: JSON.stringify({url: url, text: text, used: false}),
-		success: function (data, textStatus, jqXhr) {
-			btn.html('<i class="fa fa-check"></i> Added');
-			btn.prop('disabled', true)
-		},
-		error: function (request, status, error) {
-			console.log(request.responseText);
-		}
-	});
+	$.get('https://islamqa.info' + url, function(data) {
+		var parser = new DOMParser();
+		var doc = parser.parseFromString(data, "text/html");
+		var question = doc.body.querySelectorAll('.ftwa-single-q')[0].firstChild.nodeValue
+		var ans = Array.prototype.slice.call(doc.body.querySelectorAll('.ftwa-single-answer'))
+		var answer = $(ans[0]).text();
+
+		btn.html('<i class="fa fa-check"></i> Added');
+		btn.prop('disabled', true)
+
+		$.ajax({
+			type: "POST",
+			url: 'https://islamqa-8d514.firebaseio.com/' + userID + '.json',
+			dataType: 'json',
+			data: JSON.stringify({ url: url, text: text, used: false, question: question, answer: answer }),
+			success: function (data, textStatus, jqXhr) {
+				
+			},
+			error: function (request, status, error) {
+				console.log(request.responseText);
+			}
+		});
+	})
 }
 
 function setUserID() {
