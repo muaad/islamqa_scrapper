@@ -169,6 +169,10 @@ function addLinks (evt) {
 	setUserID()
 
     function checkForJS_Finish () {
+		if (document.querySelector("#qa-date") != null) {
+			clearInterval(jsInitChecktimer);
+			$('#qa-date').append(' <a href="#" id="see-questions" class="pull-right btn btn-sm btn-success" style="background: #793218;"><i class="fa fa-eye"></i> See Your Questions</a><br>')
+		}
 		if (document.querySelector(".list-group-item") != null) {
 			clearInterval (jsInitChecktimer);
 			if ($('.panel-title').length === 1) {
@@ -180,7 +184,6 @@ function addLinks (evt) {
 				$('.panel-title').css('margin-bottom', '6px')
 			}
 
-			$('#qa-date').append(' <a href="#" id="see-questions" class="pull-right btn btn-sm btn-success" style="background: #793218;"><i class="fa fa-eye"></i> See Your Questions</a><br>')
 			
 			var elements = $('.list-group-item')
 			elements.each(function(el) {
@@ -199,7 +202,6 @@ function addLinks (evt) {
 		}
 		else if (document.querySelector(".list-link") != null) {
 			clearInterval(jsInitChecktimer);
-			$('#qa-date').append(' <a href="#" id="see-questions" class="pull-right btn btn-sm btn-success" style="background: #793218;"><i class="fa fa-eye"></i> See Your Questions</a><br>')
 			var listLinks = $('.list-link')
 			listLinks.each(function () {
 				var url = $(this).attr('href')
@@ -209,6 +211,6 @@ function addLinks (evt) {
 					$(this).append('<span class="pull-right"><a href="#" class="add-to-list" data-url="' + url + '" data-text="' + text + '"><i class="fa fa-plus"></i> Add To List</a></span><br><br>')
 				}
 			})
-		}  
+		}
     }
 }
