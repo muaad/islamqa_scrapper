@@ -167,18 +167,38 @@ function addLinks (evt) {
 					var text = $('.ftwa-single-title').text().split(':')[1].trim();
 					$('.panel-title').append('<br><br><span class="pull-right" style="background: white;"><a href="#" class="add-to-list btn btn-sm btn-success" data-url="' + url + '" data-text="' + text + '"><i class="fa fa-plus"></i> Add To List</a></span><br><br>')
 				}
-				$('.panel-title').append('<a href="#" id="see-questions" class="pull-right btn btn-sm btn-success"><i class="fa fa-eye"></i> See Your Questions</a><br>')
 				$('.panel-title').css('margin-bottom', '6px')
 			}
+
+			$('#qa-date').append(' <a href="#" id="see-questions" class="pull-right btn btn-sm btn-success" style="background: #793218;"><i class="fa fa-eye"></i> See Your Questions</a><br>')
+			
 			var elements = $('.list-group-item')
 			elements.each(function(el) {
 				var url = $(this).attr('href')
-				var text = $(this).html().split('<')[0].split('-')[1]
+				if ($(this).parent().attr("class") === 'related-item') {
+					var text = $(this).html()
+				} else {
+					var text = $(this).html().split('<')[0].split('-')[1]
+				}
+				
 				if (text !== '' && text !== null && text !== undefined) {
 					text = text.trim();
 					$(this).append('<br><br><span class="pull-right" style="background: white;"><a href="#" class="add-to-list btn btn-sm btn-success" data-url="' + url + '" data-text="' + text + '"><i class="fa fa-plus"></i> Add To List</a></span><br><br>')
 				}
 			})
-      }
+		}
+		else if (document.querySelector(".list-link") != null) {
+			clearInterval(jsInitChecktimer);
+			$('#qa-date').append(' <a href="#" id="see-questions" class="pull-right btn btn-sm btn-success" style="background: #793218;"><i class="fa fa-eye"></i> See Your Questions</a><br>')
+			var listLinks = $('.list-link')
+			listLinks.each(function () {
+				var url = $(this).attr('href')
+				var text = $(this).html()
+				if (text !== '' && text !== null && text !== undefined) {
+					text = text.trim();
+					$(this).append('<span class="pull-right"><a href="#" class="add-to-list" data-url="' + url + '" data-text="' + text + '"><i class="fa fa-plus"></i> Add To List</a></span><br><br>')
+				}
+			})
+		}  
     }
 }
